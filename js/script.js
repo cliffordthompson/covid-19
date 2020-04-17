@@ -17,10 +17,10 @@
 // ***************************************************************************
 
 const FRAMES_PER_SECOND = 30;
-const BALL_SIZE_PX = 5;
-let ballPositionX, ballPositionY;
-let ballVelocityX, ballVelocityY;
+const NUMBER_OF_BALLS = 50;
 let canvas, context;
+let balls = [];
+
 
 function startSimulationLoop() {
 
@@ -29,55 +29,83 @@ function startSimulationLoop() {
   context = canvas.getContext("2d");
 
   // set up interval (game loop)
-  setInterval(updateCanvas, 1000 / FRAMES_PER_SECOND);
+  setInterval(updateSimulation, 1000 / FRAMES_PER_SECOND);
 
-  // ball starting position
-  ballPositionX = canvas.width / 2;
-  ballPositionY = canvas.height / 2;
-
-  // random ball starting speed
-  ballVelocityX = Math.floor(Math.random() * 75 + 25) / FRAMES_PER_SECOND;
-  ballVelocityY = Math.floor(Math.random() * 75 + 25) / FRAMES_PER_SECOND;
-
-  // random ball direction
-  if (Math.floor(Math.random() * 2) == 0) {
-    ballVelocityX = -ballVelocityX;
-  }
-  if (Math.floor(Math.random() * 2) == 0) {
-    ballVelocityY = -ballVelocityY;
+  for(var i = 0; i < NUMBER_OF_BALLS; ++i) {
+    balls.push(createBall());
   }
 }
 
-function updateCanvas() {
+function updateSimulation() {
 
-  // move the ball
-  ballPositionX += ballVelocityX;
-  ballPositionY += ballVelocityY;
-
-  // bounce the ball off each wall
-  if (ballPositionX - BALL_SIZE_PX / 2 < 0 && ballVelocityX < 0) {
-    ballVelocityX = -ballVelocityX;
-  }
-  if (ballPositionX + BALL_SIZE_PX / 2 > canvas.width && ballVelocityX > 0) {
-    ballVelocityX = -ballVelocityX;
-  }
-  if (ballPositionY - BALL_SIZE_PX / 2 < 0 && ballVelocityY < 0) {
-    ballVelocityY = -ballVelocityY;
-  }
-  if (ballPositionY + BALL_SIZE_PX / 2 > canvas.height && ballVelocityY > 0) {
-    ballVelocityY = -ballVelocityY;
+  for(var i = 0; i < NUMBER_OF_BALLS; ++i) {
+    updateBall(balls[i]);
   }
 
+  drawBackground();
+
+  for(var i = 0; i < NUMBER_OF_BALLS; ++i) {
+    drawBall(balls[i]);
+  }
+}
+
+function drawBackground() {
   // draw background
-  context.fillStyle = "grey";
+  context.fillStyle = "#aaaaaa";
   context.fillRect(0, 0, canvas.width, canvas.height);
+}
 
+function drawBall(ball) {
   // draw ball
   context.beginPath();
-  context.arc(ballPositionX, ballPositionY, BALL_SIZE_PX, 0, 2 * Math.PI, false);
+  context.arc(ball.positionX, ball.positionY, ball.sizePx, 0, 2 * Math.PI, false);
   context.fillStyle = "lightblue";
   context.fill();
   context.lineWidth = 1;
   context.strokeStyle = "black";
   context.stroke();
+}
+
+function createBall() {
+
+  let positionX, positionY;
+  let velocityX, velocityY;
+
+  // ball starting position
+  positionX = canvas.width / 2;
+  positionY = canvas.height / 2;
+
+  // random ball starting speed
+  velocityX = Math.floor(Math.random() * 75 + 25) / FRAMES_PER_SECOND;
+  velocityY = Math.floor(Math.random() * 75 + 25) / FRAMES_PER_SECOND;
+
+  // random ball direction
+  if (Math.floor(Math.random() * 2) == 0) {
+    velocityX = -velocityX;
+  }
+  if (Math.floor(Math.random() * 2) == 0) {
+    velocityY = -velocityY;
+  }
+
+  return new Ball(positionX, positionY, velocityX, velocityY);
+}
+
+function updateBall(ball) {
+
+  // move the ball
+  ball.moveByVelocity();
+
+  // bounce the ball off each wall
+  if (ball.positionX - ball.sizePx / 2 < 0 && ball.velocityX < 0) {
+    ball.velocityX = -ball.velocityX;
+  }
+  if (ball.positionX + ball.sizePx / 2 > canvas.width && ball.velocityX > 0) {
+    ball.velocityX = -ball.velocityX;
+  }
+  if (ball.positionY - ball.sizePx / 2 < 0 && ball.velocityY < 0) {
+    ball.velocityY = -ball.velocityY;
+  }
+  if (ball.positionY + ball.sizePx / 2 > canvas.height && ball.velocityY > 0) {
+    ball.velocityY = -ball.velocityY;
+  }
 }
