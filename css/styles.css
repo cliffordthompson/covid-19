@@ -48,7 +48,7 @@ header {
 }
 
 div {
-  border: 1px solid red; // For debugging
+  //border: 1px solid red; // For debugging
 }
 
 canvas {

@@ -17,10 +17,8 @@
 // ***************************************************************************
 
 const FRAMES_PER_SECOND = 30;
-const NUMBER_OF_BALLS = 50;
 let canvas, context;
 let balls = [];
-
 
 function startSimulationLoop() {
 
@@ -28,30 +26,38 @@ function startSimulationLoop() {
   canvas = document.getElementById("simulation-canvas");
   context = canvas.getContext("2d");
 
-  // set up interval (game loop)
-  setInterval(updateSimulation, 1000 / FRAMES_PER_SECOND);
+  resetSimulation();
 
-  for(var i = 0; i < NUMBER_OF_BALLS; ++i) {
+  // set up simulation loop
+  setInterval(updateSimulation, 1000 / FRAMES_PER_SECOND);
+}
+
+function resetSimulation() {
+
+  let numberOfBalls = document.getElementById("number_people").value;
+
+  balls = [];
+  for(var i = 0; i < numberOfBalls; ++i) {
     balls.push(createBall());
   }
 }
 
 function updateSimulation() {
 
-  for(var i = 0; i < NUMBER_OF_BALLS; ++i) {
+  for(var i = 0; i < balls.length; ++i) {
     updateBall(balls[i]);
   }
 
   drawBackground();
 
-  for(var i = 0; i < NUMBER_OF_BALLS; ++i) {
+  for(var i = 0; i < balls.length; ++i) {
     drawBall(balls[i]);
   }
 }
 
 function drawBackground() {
   // draw background
-  context.fillStyle = "#aaaaaa";
+  context.fillStyle = "#aabbaa";
   context.fillRect(0, 0, canvas.width, canvas.height);
 }
 
@@ -72,12 +78,12 @@ function createBall() {
   let velocityX, velocityY;
 
   // ball starting position
-  positionX = canvas.width / 2;
-  positionY = canvas.height / 2;
+  positionX = Math.random() * canvas.width;
+  positionY = Math.random() * canvas.height;
 
   // random ball starting speed
-  velocityX = Math.floor(Math.random() * 75 + 25) / FRAMES_PER_SECOND;
-  velocityY = Math.floor(Math.random() * 75 + 25) / FRAMES_PER_SECOND;
+  velocityX = (20 + Math.random() * 80) / FRAMES_PER_SECOND;
+  velocityY = (20 + Math.random() * 80) / FRAMES_PER_SECOND;
 
   // random ball direction
   if (Math.floor(Math.random() * 2) == 0) {

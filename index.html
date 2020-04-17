@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 # ***************************************************************************
-  -->
+-->
 <html>
   <head>
     <meta charset="UTF-8">
@@ -34,7 +34,46 @@
       </div>
     </header>
     <div class="container canvas">
-      <canvas id="simulation-canvas" width="500" height="500"></canvas>
+      <div class="row">
+        <div class="col">
+          <canvas id="simulation-canvas" width="500" height="500"></canvas>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              <label>People</label>
+            </div>
+            <div class="col">
+              <input type="range" class="form-control-range" min="1" max="200" value="50" onchange="number_people.value=value;resetSimulation()"></input>
+            </div>
+            <div class="col">
+              <output id="number_people">50</output>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label>Recover Rate (Days)</label>
+            </div>
+            <div class="col">
+              <input type="range" class="form-control-range" min="1" max="28" value="14" onchange="recovery_rate.value=value;resetSimulation()"></input>
+            </div>
+            <div class="col">
+              <output id="recovery_rate">14</output>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label>Death Rate (per 100)</label>
+            </div>
+            <div class="col">
+              <input type="range" class="form-control-range" min="0" max="100" value="1" onchange="death_rate.value=value;resetSimulation()"></input>
+            </div>
+            <div class="col">
+              <output id="death_rate">1</output>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <script src="js/jquery-3.5.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
