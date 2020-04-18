@@ -17,8 +17,12 @@
 // ***************************************************************************
 
 const FRAMES_PER_SECOND = 30;
+const FRAMES_PER_DAY = FRAMES_PER_SECOND;
 let canvas, context;
 let balls = [];
+let currentDay = 0
+let currentDayFrame = 0;
+let recoveryInDays = 0;
 
 function startSimulationLoop() {
 
@@ -38,6 +42,9 @@ function resetSimulation() {
 
   balls = [];
   currentInfections = 0;
+  currentDay = 0;
+  currentDayFrame = 0;
+  recoveryInDays = document.getElementById("recovery_rate").value;
   for(var i = 0; i < numberOfBalls; ++i) {
     balls.push(createBall());
   }
@@ -45,28 +52,9 @@ function resetSimulation() {
 
 function updateSimulation() {
 
-  for(var i = 0; i < balls.length; ++i) {
-    updateBallPositions(balls[i]);
-  }
-
-  let distanceBetweenBalls = 0;
-  let deltaX = 0;
-  let deltaY = 0;
-
-  for(var i = 0; i < balls.length; ++i) {
-    if(balls[i].infected){
-      for(var j = 0; j < balls.length; ++j) {
-        if(!balls[j].infected && i !== j ) {
-          deltaX = balls[i].positionX - balls[j].positionX;
-          deltaY = balls[i].positionY - balls[j].positionY;
-          distanceBetweenBalls = Math.sqrt(deltaX*deltaX + deltaY*deltaY) - balls[i].sizePx - balls[j].sizePx;
-          if(distanceBetweenBalls <= 0) {
-            balls[j].infected = true;
-          }
-        }
-      }
-    }
-  }
+  updateTime(balls);
+  updatePositions(balls);
+  updateInfections(balls);
 
   drawBackground();
 
@@ -88,7 +76,10 @@ function drawBall(ball) {
   if(ball.infected) {
     context.fillStyle = "red";
   }
-  else {
+  else if(ball.immune){
+    context.fillStyle = "lightgreen";
+  }
+  else{
     context.fillStyle = "lightblue";
   }
   context.fill();
@@ -102,6 +93,8 @@ function createBall() {
   let positionX, positionY;
   let velocityX, velocityY;
   let infected = false;
+  let immune = false;
+  let daysLeftInfected = null;
 
   // ball starting position
   positionX = Math.random() * canvas.width;
@@ -123,12 +116,28 @@ function createBall() {
   // Randomly infect
   if(Math.floor(Math.random() * 10) === 5) {
     infected = true;
+    daysLeftInfected = recoveryInDays;
   }
 
-  return new Ball(positionX, positionY, velocityX, velocityY, infected);
+  return new Ball(positionX, positionY, velocityX, velocityY, infected, daysLeftInfected, immune);
 }
 
-function updateBallPositions(ball) {
+function updateTime(balls) {
+  currentDayFrame++;
+  if(currentDayFrame >= FRAMES_PER_DAY) {
+    currentDay++;
+    currentDayFrame = 0;
+    updateImmunity(balls);
+  }
+}
+
+function updatePositions(){
+  for(var i = 0; i < balls.length; ++i) {
+    updateBallPosition(balls[i]);
+  }
+}
+
+function updateBallPosition(ball) {
 
   // move the ball
   ball.moveByVelocity();
@@ -145,5 +154,39 @@ function updateBallPositions(ball) {
   }
   if (ball.positionY + (ball.sizePx / 2) > canvas.height && ball.velocityY > 0) {
     ball.velocityY = -ball.velocityY;
+  }
+}
+
+function updateImmunity(balls) {
+  for(var i = 0; i < balls.length; ++i) {
+    if(balls[i].infected) {
+      balls[i].daysLeftInfected -= 1;
+      if(balls[i].daysLeftInfected === 0){
+        balls[i].infected = false;
+        balls[i].immune = true;
+      }
+    }
+  }
+}
+
+function updateInfections(balls) {
+  let distanceBetweenBalls = 0;
+  let deltaX = 0;
+  let deltaY = 0;
+
+  for(var i = 0; i < balls.length; ++i) {
+    if(balls[i].infected){
+      for(var j = 0; j < balls.length; ++j) {
+        if(!balls[j].immune && !balls[j].infected && i !== j ) {
+          deltaX = balls[i].positionX - balls[j].positionX;
+          deltaY = balls[i].positionY - balls[j].positionY;
+          distanceBetweenBalls = Math.sqrt(deltaX*deltaX + deltaY*deltaY) - balls[i].sizePx - balls[j].sizePx;
+          if(distanceBetweenBalls <= 0) {
+            balls[j].infected = true;
+            balls[j].daysLeftInfected = recoveryInDays;
+          }
+        }
+      }
+    }
   }
 }
