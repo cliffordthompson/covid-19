@@ -72,10 +72,10 @@
                   <label>Death Rate (per 100)</label>
                 </div>
                 <div class="col">
-                  <input disabled="true" type="range" class="form-control-range" min="0" max="100" value="1" onchange="death_rate.value=value;resetSimulation()"></input>
+                  <input disabled="true" type="range" class="form-control-range" min="0" max="100" value="0" onchange="death_rate.value=value;resetSimulation()"></input>
                 </div>
                 <div class="col">
-                  <output id="death_rate">1</output>
+                  <output id="death_rate">0</output>
                 </div>
               </div>
               <div class="row">
@@ -94,16 +94,23 @@
                   <label>Hospital Capacity</label>
                 </div>
                 <div class="col">
-                  <input disabled="true" type="range" class="form-control-range" min="0" max="100" value="20" onchange="hospital_capacity.value=value;resetSimulation()"></input>
+                  <input disabled="true" type="range" class="form-control-range" min="0" max="100" value="100" onchange="hospital_capacity.value=value;resetSimulation()"></input>
                 </div>
                 <div class="col">
-                  <output id="hospital_capacity">20</output>
+                  <output id="hospital_capacity">100</output>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col">
           <div class="card">
             <div class="card-body">
+              <canvas id="data_graph"></canvas>
             </div>
           </div>
         </div>
@@ -113,5 +120,6 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/ball.js"></script>
     <script src="js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   </body>
 </html>
