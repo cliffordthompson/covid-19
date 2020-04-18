@@ -46,7 +46,7 @@ function resetSimulation() {
 function updateSimulation() {
 
   for(var i = 0; i < balls.length; ++i) {
-    updateBall(balls[i]);
+    updateBallPositions(balls[i]);
   }
 
   drawBackground();
@@ -109,7 +109,7 @@ function createBall() {
   return new Ball(positionX, positionY, velocityX, velocityY, infected);
 }
 
-function updateBall(ball) {
+function updateBallPositions(ball) {
 
   // move the ball
   ball.moveByVelocity();
