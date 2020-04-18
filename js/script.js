@@ -49,6 +49,25 @@ function updateSimulation() {
     updateBallPositions(balls[i]);
   }
 
+  let distanceBetweenBalls = 0;
+  let deltaX = 0;
+  let deltaY = 0;
+
+  for(var i = 0; i < balls.length; ++i) {
+    if(balls[i].infected){
+      for(var j = 0; j < balls.length; ++j) {
+        if(!balls[j].infected && i !== j ) {
+          deltaX = balls[i].positionX - balls[j].positionX;
+          deltaY = balls[i].positionY - balls[j].positionY;
+          distanceBetweenBalls = Math.sqrt(deltaX*deltaX + deltaY*deltaY) - balls[i].sizePx - balls[j].sizePx;
+          if(distanceBetweenBalls <= 0) {
+            balls[j].infected = true;
+          }
+        }
+      }
+    }
+  }
+
   drawBackground();
 
   for(var i = 0; i < balls.length; ++i) {
