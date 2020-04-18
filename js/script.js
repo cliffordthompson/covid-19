@@ -37,6 +37,7 @@ function resetSimulation() {
   let numberOfBalls = document.getElementById("number_people").value;
 
   balls = [];
+  currentInfections = 0;
   for(var i = 0; i < numberOfBalls; ++i) {
     balls.push(createBall());
   }
@@ -65,7 +66,12 @@ function drawBall(ball) {
   // draw ball
   context.beginPath();
   context.arc(ball.positionX, ball.positionY, ball.sizePx, 0, 2 * Math.PI, false);
-  context.fillStyle = "lightblue";
+  if(ball.infected) {
+    context.fillStyle = "red";
+  }
+  else {
+    context.fillStyle = "lightblue";
+  }
   context.fill();
   context.lineWidth = 1;
   context.strokeStyle = "black";
@@ -76,14 +82,16 @@ function createBall() {
 
   let positionX, positionY;
   let velocityX, velocityY;
+  let infected = false;
 
   // ball starting position
   positionX = Math.random() * canvas.width;
   positionY = Math.random() * canvas.height;
 
   // random ball starting speed
-  velocityX = (20 + Math.random() * 80) / FRAMES_PER_SECOND;
-  velocityY = (20 + Math.random() * 80) / FRAMES_PER_SECOND;
+  let movementRate = document.getElementById("movement_rate").value;
+  velocityX = (25 + Math.floor(Math.random() * movementRate)) / FRAMES_PER_SECOND;
+  velocityY = (25 + Math.floor(Math.random() * movementRate)) / FRAMES_PER_SECOND;
 
   // random ball direction
   if (Math.floor(Math.random() * 2) == 0) {
@@ -93,7 +101,12 @@ function createBall() {
     velocityY = -velocityY;
   }
 
-  return new Ball(positionX, positionY, velocityX, velocityY);
+  // Randomly infect
+  if(Math.floor(Math.random() * 10) === 5) {
+    infected = true;
+  }
+
+  return new Ball(positionX, positionY, velocityX, velocityY, infected);
 }
 
 function updateBall(ball) {
@@ -102,16 +115,16 @@ function updateBall(ball) {
   ball.moveByVelocity();
 
   // bounce the ball off each wall
-  if (ball.positionX - ball.sizePx / 2 < 0 && ball.velocityX < 0) {
+  if (ball.positionX - (ball.sizePx / 2) < 0 && ball.velocityX < 0) {
     ball.velocityX = -ball.velocityX;
   }
-  if (ball.positionX + ball.sizePx / 2 > canvas.width && ball.velocityX > 0) {
+  if (ball.positionX + (ball.sizePx / 2) > canvas.width && ball.velocityX > 0) {
     ball.velocityX = -ball.velocityX;
   }
-  if (ball.positionY - ball.sizePx / 2 < 0 && ball.velocityY < 0) {
+  if (ball.positionY - (ball.sizePx / 2) < 0 && ball.velocityY < 0) {
     ball.velocityY = -ball.velocityY;
   }
-  if (ball.positionY + ball.sizePx / 2 > canvas.height && ball.velocityY > 0) {
+  if (ball.positionY + (ball.sizePx / 2) > canvas.height && ball.velocityY > 0) {
     ball.velocityY = -ball.velocityY;
   }
 }

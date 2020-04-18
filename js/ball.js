@@ -16,13 +16,14 @@
 //
 // ***************************************************************************
 
-function Ball (positionX, positionY, velocityX, velocityY) {
+function Ball (positionX, positionY, velocityX, velocityY, infected) {
 
   this.positionX = positionX;
   this.positionY = positionY;
   this.velocityX = velocityX;
   this.velocityY = velocityY;
-  this.sizePx = 5;
+  this.sizePx = 10;
+  this.infected = infected;
 
   this.moveByVelocity = function() {
     this.positionX += this.velocityX;
