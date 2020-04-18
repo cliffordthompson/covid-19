@@ -36,51 +36,74 @@
     <div class="container canvas">
       <div class="row">
         <div class="col">
-          <canvas id="simulation-canvas" width="500" height="500"></canvas>
+          <div class="card">
+            <div class="card-body">
+              <canvas id="simulation-canvas" width="500" height="500"></canvas>
+            </div>
+          </div>
         </div>
         <div class="col">
-          <div class="row">
-            <div class="col">
-              <label>People</label>
-            </div>
-            <div class="col">
-              <input type="range" class="form-control-range" min="1" max="200" value="50" onchange="number_people.value=value;resetSimulation()"></input>
-            </div>
-            <div class="col">
-              <output id="number_people">50</output>
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <label>People</label>
+                </div>
+                <div class="col">
+                  <input type="range" class="form-control-range" min="1" max="200" value="50" onchange="number_people.value=value;resetSimulation()"></input>
+                </div>
+                <div class="col">
+                  <output id="number_people">50</output>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label>Recover Rate (Days)</label>
+                </div>
+                <div class="col">
+                  <input type="range" class="form-control-range" min="1" max="28" value="14" onchange="recovery_rate.value=value;resetSimulation()"></input>
+                </div>
+                <div class="col">
+                  <output id="recovery_rate">14</output>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label>Death Rate (per 100)</label>
+                </div>
+                <div class="col">
+                  <input disabled="true" type="range" class="form-control-range" min="0" max="100" value="1" onchange="death_rate.value=value;resetSimulation()"></input>
+                </div>
+                <div class="col">
+                  <output id="death_rate">1</output>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label>Movement Rate</label>
+                </div>
+                <div class="col">
+                  <input type="range" class="form-control-range" min="0" max="100" value="30" onchange="movement_rate.value=value;resetSimulation()"></input>
+                </div>
+                <div class="col">
+                  <output id="movement_rate">30</output>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label>Hospital Capacity</label>
+                </div>
+                <div class="col">
+                  <input disabled="true" type="range" class="form-control-range" min="0" max="100" value="20" onchange="hospital_capacity.value=value;resetSimulation()"></input>
+                </div>
+                <div class="col">
+                  <output id="hospital_capacity">20</output>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col">
-              <label>Recover Rate (Days)</label>
-            </div>
-            <div class="col">
-              <input type="range" class="form-control-range" min="1" max="28" value="14" onchange="recovery_rate.value=value;resetSimulation()"></input>
-            </div>
-            <div class="col">
-              <output id="recovery_rate">14</output>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <label>Death Rate (per 100)</label>
-            </div>
-            <div class="col">
-              <input type="range" class="form-control-range" min="0" max="100" value="1" onchange="death_rate.value=value;resetSimulation()"></input>
-            </div>
-            <div class="col">
-              <output id="death_rate">1</output>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <label>Movement Rate</label>
-            </div>
-            <div class="col">
-              <input type="range" class="form-control-range" min="0" max="100" value="30" onchange="movement_rate.value=value;resetSimulation()"></input>
-            </div>
-            <div class="col">
-              <output id="movement_rate">30</output>
+          <div class="card">
+            <div class="card-body">
             </div>
           </div>
         </div>

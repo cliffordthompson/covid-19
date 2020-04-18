@@ -79,6 +79,9 @@ function drawBall(ball) {
   else if(ball.immune){
     context.fillStyle = "lightgreen";
   }
+  else if(ball.dead) {
+    context.fillStyle = "lightgrey";
+  }
   else{
     context.fillStyle = "lightblue";
   }
@@ -127,6 +130,7 @@ function updateTime(balls) {
   if(currentDayFrame >= FRAMES_PER_DAY) {
     currentDay++;
     currentDayFrame = 0;
+    updateDeaths(balls);
     updateImmunity(balls);
   }
 }
@@ -154,6 +158,14 @@ function updateBallPosition(ball) {
   }
   if (ball.positionY + (ball.sizePx / 2) > canvas.height && ball.velocityY > 0) {
     ball.velocityY = -ball.velocityY;
+  }
+}
+
+function updateDeaths(balls) {
+  for(var i = 0; i < balls.length; ++i) {
+    if(balls[i].infected) {
+      // TODO
+    }
   }
 }
 
