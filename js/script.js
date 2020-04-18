@@ -90,8 +90,8 @@ function createBall() {
 
   // random ball starting speed
   let movementRate = document.getElementById("movement_rate").value;
-  velocityX = (25 + Math.floor(Math.random() * movementRate)) / FRAMES_PER_SECOND;
-  velocityY = (25 + Math.floor(Math.random() * movementRate)) / FRAMES_PER_SECOND;
+  velocityX = (Math.floor(Math.random() * movementRate)) / FRAMES_PER_SECOND;
+  velocityY = (Math.floor(Math.random() * movementRate)) / FRAMES_PER_SECOND;
 
   // random ball direction
   if (Math.floor(Math.random() * 2) == 0) {
