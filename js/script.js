@@ -22,6 +22,7 @@ const CHART_START_DAYS = 100;
 let canvas, context;
 let balls = [];
 let lineChart;
+let doughnutChart;
 let currentDay = 0
 let currentDayFrame = 0;
 let recoveryInDays = 0;
@@ -62,7 +63,7 @@ function resetSimulation() {
     balls.push(createBall());
   }
 
-  var chartData = {
+  var lineChartData = {
     labels: Array.from(Array(CHART_START_DAYS+1).keys()),
     datasets: [
       {
@@ -91,10 +92,10 @@ function resetSimulation() {
       },]
   };
 
-  var dataGraphContext = document.getElementById("data_graph");
-  lineChart = new Chart(dataGraphContext, {
+  var lineChartContext = document.getElementById("line_chart");
+  lineChart = new Chart(lineChartContext, {
     type: 'line',
-    data: chartData,
+    data: lineChartData,
     options: {
       scales: {
         yAxes: [{
@@ -108,6 +109,22 @@ function resetSimulation() {
       }
     }
   });
+
+  var doughnutChartData = {
+    labels: ["Infected", "Immune", "Dead", "Unaffected"],
+    datasets: [
+      {
+        backgroundColor: ["red", "lightgreen", "black", "lightblue"],
+        borderWidth: 0,
+        data: [1,1,1,1],
+      },]
+  };
+
+  var doughnutChartContext = document.getElementById("doughnut_chart");
+  doughnutChart = new Chart(doughnutChartContext, {
+    type: 'doughnut',
+    data: doughnutChartData
+});
 
   // Push all the starting data into the chart
   updateChart(currentDay, balls);
@@ -337,6 +354,9 @@ function updateChart(currentDay, balls) {
   lineChart.data.datasets[2].data.push(totalDead);
   lineChart.data.datasets[3].data.push(totalUnaffected);
   lineChart.update();
+
+  doughnutChart.data.datasets[0].data = [totalInfected,totalImmune,totalDead,totalUnaffected];
+  doughnutChart.update();
 }
 
 function numberOfInfected(balls) {
