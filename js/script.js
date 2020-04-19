@@ -227,7 +227,7 @@ function updateBallPosition(ball) {
 function updateDaysInfected(balls) {
   for(var i = 0; i < balls.length; ++i) {
     if(balls[i].infected) {
-      balls[i].daysLeftInfected--;
+      balls[i].reduceDaysInfected(1);
     }
   }
 }
@@ -235,7 +235,7 @@ function updateDaysInfected(balls) {
 function updateDeaths(balls) {
   for(var i = 0; i < balls.length; ++i) {
     if(balls[i].infected && balls[i].willDie) {
-      if(balls[i].deathDay === balls[i].daysLeftInfected) {
+      if(balls[i].shouldDie()) {
         balls[i].makeDead();
       }
     }
@@ -263,8 +263,7 @@ function updateInfections(balls) {
           deltaY = balls[i].positionY - balls[j].positionY;
           distanceBetweenBalls = Math.sqrt(deltaX*deltaX + deltaY*deltaY) - balls[i].sizePx - balls[j].sizePx;
           if(distanceBetweenBalls <= 0) {
-            balls[j].infected = true;
-            balls[j].daysLeftInfected = recoveryInDays;
+            balls[j].makeInfected(recoveryInDays);
           }
         }
       }
