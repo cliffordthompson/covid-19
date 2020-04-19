@@ -155,7 +155,8 @@ function createBall() {
   let deathRate = document.getElementById("death_rate").value;
 
   if(0 !== deathRate) {
-    willDie = (0 === Math.floor(Math.random() * (100/deathRate))); // Zero is the unlucking number!!!
+    let d20 = Math.floor(Math.random() * (100/deathRate));
+    willDie = (0 === d20);
   }
 
   // ball starting position
