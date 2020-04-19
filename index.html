@@ -50,7 +50,7 @@
                   <label>People</label>
                 </div>
                 <div class="col">
-                  <input type="range" class="form-control-range" min="1" max="200" value="50" onchange="number_people.value=value;resetSimulation()"></input>
+                  <input type="range" class="form-control-range" min="1" max="200" value="50" onchange="number_people.value=value"></input>
                 </div>
                 <div class="col">
                   <output id="number_people">50</output>
@@ -61,7 +61,7 @@
                   <label>Recover Rate (Days)</label>
                 </div>
                 <div class="col">
-                  <input type="range" class="form-control-range" min="1" max="28" value="14" onchange="recovery_rate.value=value;resetSimulation()"></input>
+                  <input type="range" class="form-control-range" min="1" max="28" value="14" onchange="recovery_rate.value=value"></input>
                 </div>
                 <div class="col">
                   <output id="recovery_rate">14</output>
@@ -72,7 +72,7 @@
                   <label>Death Rate (per 100)</label>
                 </div>
                 <div class="col">
-                  <input type="range" class="form-control-range" min="0" max="100" value="1" onchange="death_rate.value=value;resetSimulation()"></input>
+                  <input type="range" class="form-control-range" min="0" max="100" value="1" onchange="death_rate.value=value"></input>
                 </div>
                 <div class="col">
                   <output id="death_rate">1</output>
@@ -83,7 +83,7 @@
                   <label>Movement Rate</label>
                 </div>
                 <div class="col">
-                  <input type="range" class="form-control-range" min="0" max="100" value="30" onchange="movement_rate.value=value;resetSimulation()"></input>
+                  <input type="range" class="form-control-range" min="0" max="100" value="30" onchange="movement_rate.value=value"></input>
                 </div>
                 <div class="col">
                   <output id="movement_rate">30</output>
@@ -94,11 +94,16 @@
                   <label>Hospital Capacity</label>
                 </div>
                 <div class="col">
-                  <input disabled="true" type="range" class="form-control-range" min="0" max="100" value="100" onchange="hospital_capacity.value=value;resetSimulation()"></input>
+                  <input disabled="true" type="range" class="form-control-range" min="0" max="100" value="100" onchange="hospital_capacity.value=value"></input>
                 </div>
                 <div class="col">
                   <output id="hospital_capacity">100</output>
                 </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <button type="button" class="btn btn-primary" onclick="resetSimulation()">Reset Simulation</button>
+                  </div>
               </div>
             </div>
           </div>
