@@ -132,7 +132,7 @@ function drawBall(ball) {
     context.fillStyle = "lightgreen";
   }
   else if(ball.dead) {
-    context.fillStyle = "lightgrey";
+    context.fillStyle = "black";
   }
   else{
     context.fillStyle = "lightblue";
@@ -150,6 +150,13 @@ function createBall() {
   let infected = false;
   let immune = false;
   let daysLeftInfected = null;
+  let willDie = false;
+  let deathDay = Math.floor(Math.random() * recoveryInDays);
+  let deathRate = document.getElementById("death_rate").value;
+
+  if(0 !== deathRate) {
+    willDie = (0 === Math.floor(Math.random() * (100/deathRate))); // Zero is the unlucking number!!!
+  }
 
   // ball starting position
   positionX = Math.random() * canvas.width;
@@ -174,7 +181,7 @@ function createBall() {
     daysLeftInfected = recoveryInDays;
   }
 
-  return new Ball(positionX, positionY, velocityX, velocityY, infected, daysLeftInfected, immune);
+  return new Ball(positionX, positionY, velocityX, velocityY, infected, daysLeftInfected, willDie, deathDay, immune);
 }
 
 function updateTime(balls) {
@@ -182,7 +189,7 @@ function updateTime(balls) {
   if(currentDayFrame >= FRAMES_PER_DAY) {
     currentDay++;
     currentDayFrame = 0;
-    updateDeaths(balls);
+    updateDeaths(currentDay, balls);
     updateImmunity(balls);
     updateChart(currentDay, balls);
   }
@@ -214,10 +221,12 @@ function updateBallPosition(ball) {
   }
 }
 
-function updateDeaths(balls) {
+function updateDeaths(currentDay, balls) {
   for(var i = 0; i < balls.length; ++i) {
-    if(balls[i].infected) {
-      // TODO
+    if(balls[i].infected && balls[i].willDie) {
+      if(balls[i].deathDay === balls[i].daysLeftInfected) {
+        balls[i].kill();
+      }
     }
   }
 }
@@ -242,7 +251,7 @@ function updateInfections(balls) {
   for(var i = 0; i < balls.length; ++i) {
     if(balls[i].infected){
       for(var j = 0; j < balls.length; ++j) {
-        if(!balls[j].immune && !balls[j].infected && i !== j ) {
+        if(i !== j && !balls[j].immune && !balls[j].infected && !balls[j].dead) {
           deltaX = balls[i].positionX - balls[j].positionX;
           deltaY = balls[i].positionY - balls[j].positionY;
           distanceBetweenBalls = Math.sqrt(deltaX*deltaX + deltaY*deltaY) - balls[i].sizePx - balls[j].sizePx;

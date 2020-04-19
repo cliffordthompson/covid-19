@@ -16,7 +16,7 @@
 //
 // ***************************************************************************
 
-function Ball (positionX, positionY, velocityX, velocityY, infected, daysLeftInfected, immune) {
+function Ball (positionX, positionY, velocityX, velocityY, infected, daysLeftInfected, willDie, deathDay, immune) {
 
   this.positionX = positionX;
   this.positionY = positionY;
@@ -25,11 +25,22 @@ function Ball (positionX, positionY, velocityX, velocityY, infected, daysLeftInf
   this.sizePx = 10;
   this.infected = infected;
   this.daysLeftInfected = daysLeftInfected;
-  this.immune = false;
+  this.willDie = willDie;
+  this.deathDay = deathDay;
+  this.immune = immune;
   this.dead = false;
 
   this.moveByVelocity = function() {
     this.positionX += this.velocityX;
     this.positionY += this.velocityY;
+  }
+
+  this.kill = function() {
+    this.dead = true;
+    this.infected = false;
+    this.daysLeftInfected = 0;
+    this.immune = false;
+    this.velocityX = 0;
+    this.velocityY = 0;
   }
 }

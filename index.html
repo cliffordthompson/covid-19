@@ -72,10 +72,10 @@
                   <label>Death Rate (per 100)</label>
                 </div>
                 <div class="col">
-                  <input disabled="true" type="range" class="form-control-range" min="0" max="100" value="0" onchange="death_rate.value=value;resetSimulation()"></input>
+                  <input type="range" class="form-control-range" min="0" max="100" value="1" onchange="death_rate.value=value;resetSimulation()"></input>
                 </div>
                 <div class="col">
-                  <output id="death_rate">0</output>
+                  <output id="death_rate">1</output>
                 </div>
               </div>
               <div class="row">
