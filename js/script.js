@@ -156,6 +156,7 @@ function createBall() {
 
   if(0 !== deathRate) {
     let d20 = Math.floor(Math.random() * (100/deathRate));
+    console.log("D20: " + d20);
     willDie = (0 === d20);
   }
 
@@ -190,7 +191,8 @@ function updateTime(balls) {
   if(currentDayFrame >= FRAMES_PER_DAY) {
     currentDay++;
     currentDayFrame = 0;
-    updateDeaths(currentDay, balls);
+    updateDaysInfected(balls);
+    updateDeaths(balls);
     updateImmunity(balls);
     updateChart(currentDay, balls);
   }
@@ -222,11 +224,19 @@ function updateBallPosition(ball) {
   }
 }
 
-function updateDeaths(currentDay, balls) {
+function updateDaysInfected(balls) {
+  for(var i = 0; i < balls.length; ++i) {
+    if(balls[i].infected) {
+      balls[i].daysLeftInfected--;
+    }
+  }
+}
+
+function updateDeaths(balls) {
   for(var i = 0; i < balls.length; ++i) {
     if(balls[i].infected && balls[i].willDie) {
       if(balls[i].deathDay === balls[i].daysLeftInfected) {
-        balls[i].kill();
+        balls[i].makeDead();
       }
     }
   }
@@ -234,12 +244,8 @@ function updateDeaths(currentDay, balls) {
 
 function updateImmunity(balls) {
   for(var i = 0; i < balls.length; ++i) {
-    if(balls[i].infected) {
-      balls[i].daysLeftInfected -= 1;
-      if(balls[i].daysLeftInfected === 0){
-        balls[i].infected = false;
-        balls[i].immune = true;
-      }
+    if(balls[i].infected && balls[i].daysLeftInfected === 0) {
+      balls[i].makeImmune();
     }
   }
 }

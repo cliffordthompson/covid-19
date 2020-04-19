@@ -35,7 +35,15 @@ function Ball (positionX, positionY, velocityX, velocityY, infected, daysLeftInf
     this.positionY += this.velocityY;
   }
 
-  this.kill = function() {
+  this.makeImmune = function() {
+    this.infected = false;
+    this.immune = true;
+    this.willDie = false;
+    this.daysLeftInfected = 0;
+    this.deathDay = null;
+  }
+
+  this.makeDead = function() {
     this.dead = true;
     this.infected = false;
     this.daysLeftInfected = 0;
