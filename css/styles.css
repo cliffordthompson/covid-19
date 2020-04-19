@@ -27,31 +27,26 @@ html {
   box-sizing: inherit;
 }
 
-body {
-  color: #343434;
-  margin: 0;
-  padding: 0;
-  font-size: 15px;
-  line-height: 1.5;
-}
-
-.content-wrap {
-  max-width: 800px;
-  width: 85%;
-  margin: 0 auto;
-  padding: 60px 0;
-}
-
-header {
-  background: #709255;
-  color: #ffffff;
-}
-
 div {
   //border: 1px solid red; // For debugging
 }
 
 canvas {
   border: 1px solid black;
+  margin: 0 auto;
 }
+
+.sim-column {
+  padding-bottom: 15px;
+  text-align: center;
+}
+
+.sim-jumbotron {
+  background: #709255;
+  color: #ffffff;
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+
 

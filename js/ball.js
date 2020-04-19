@@ -22,7 +22,7 @@ function Ball (positionX, positionY, velocityX, velocityY, infected, daysLeftInf
   this.positionY = positionY;
   this.velocityX = velocityX;
   this.velocityY = velocityY;
-  this.sizePx = 10;
+  this.sizePx = 6;
   this.infected = infected;
   this.daysLeftInfected = daysLeftInfected;
   this.willDie = willDie;

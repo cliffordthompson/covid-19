@@ -97,6 +97,7 @@ function resetSimulation() {
     type: 'line',
     data: lineChartData,
     options: {
+      responsive: false,
       scales: {
         yAxes: [{
           ticks: {
@@ -123,8 +124,10 @@ function resetSimulation() {
   var doughnutChartContext = document.getElementById("doughnut_chart");
   doughnutChart = new Chart(doughnutChartContext, {
     type: 'doughnut',
-    data: doughnutChartData
-});
+    data: doughnutChartData,
+    options: {
+      responsive: false,
+    },});
 
   // Push all the starting data into the chart
   updateChart(currentDay, balls);
