@@ -21,8 +21,8 @@ const FRAMES_PER_DAY = FRAMES_PER_SECOND;
 const CHART_START_DAYS = 100;
 let canvas, context;
 let balls = [];
-let lineChart;
-let doughnutChart;
+let lineChart = null;
+let doughnutChart = null;
 let currentDay = 0
 let currentDayFrame = 0;
 let recoveryInDays = 0;
@@ -63,7 +63,9 @@ function resetSimulation() {
     balls.push(createBall());
   }
 
-  var lineChartData = {
+  destroyCharts();
+
+  let lineChartData = {
     labels: Array.from(Array(CHART_START_DAYS+1).keys()),
     datasets: [
       {
@@ -92,7 +94,7 @@ function resetSimulation() {
       },]
   };
 
-  var lineChartContext = document.getElementById("line_chart");
+  let lineChartContext = document.getElementById("line_chart");
   lineChart = new Chart(lineChartContext, {
     type: 'line',
     data: lineChartData,
@@ -111,7 +113,7 @@ function resetSimulation() {
     }
   });
 
-  var doughnutChartData = {
+  let doughnutChartData = {
     labels: ["Infected", "Immune", "Dead", "Unaffected"],
     datasets: [
       {
@@ -121,7 +123,7 @@ function resetSimulation() {
       },]
   };
 
-  var doughnutChartContext = document.getElementById("doughnut_chart");
+  let doughnutChartContext = document.getElementById("doughnut_chart");
   doughnutChart = new Chart(doughnutChartContext, {
     type: 'doughnut',
     data: doughnutChartData,
@@ -130,7 +132,7 @@ function resetSimulation() {
     },});
 
   // Push all the starting data into the chart
-  updateChart(currentDay, balls);
+  updateCharts(currentDay, balls);
 
   // set up simulation loop
   clearIntervalLoop(intervalId);
@@ -247,7 +249,7 @@ function updateTime(balls) {
     updateDaysInfected(balls);
     updateDeaths(balls);
     updateImmunity(balls);
-    updateChart(currentDay, balls);
+    updateCharts(currentDay, balls);
   }
 }
 
@@ -324,7 +326,7 @@ function updateInfections(balls) {
   }
 }
 
-function updateChart(currentDay, balls) {
+function updateCharts(currentDay, balls) {
 
   let totalInfected = 0;
   let totalImmune = 0;
@@ -360,6 +362,19 @@ function updateChart(currentDay, balls) {
 
   doughnutChart.data.datasets[0].data = [totalInfected,totalImmune,totalDead,totalUnaffected];
   doughnutChart.update();
+}
+
+function destroyCharts() {
+
+  if(null !== lineChart) {
+    lineChart.destroy();
+    lineChart = null;
+  }
+
+  if(null !== doughnutChart) {
+    doughnutChart.destroy();
+    doughnutChart = null;
+  }
 }
 
 function numberOfInfected(balls) {
