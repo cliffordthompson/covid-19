@@ -40,6 +40,11 @@ function stopSimulation() {
   clearIntervalLoop(intervalId);
 }
 
+function finishSimulation() {
+  clearIntervalLoop(intervalId);
+  document.getElementById("resume_button").disabled = true;
+}
+
 function resumeSimulation() {
   intervalId = createIntervalLoop();
 }
@@ -125,7 +130,7 @@ function updateSimulation() {
   };
 
   if(0 === numberOfInfected(balls)) {
-    stopSimulation();
+    finishSimulation();
   }
 }
 
