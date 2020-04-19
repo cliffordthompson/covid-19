@@ -53,10 +53,10 @@
                     <label>People</label>
                   </div>
                   <div class="col">
-                    <input type="range" class="custom-range" min="1" max="200" value="50" onchange="number_people.value=value"></input>
+                    <input type="range" class="custom-range" min="1" max="200" value="100" onchange="number_people.value=value"></input>
                   </div>
                   <div class="col">
-                    <output id="number_people">50</output>
+                    <output id="number_people">100</output>
                   </div>
                 </div>
                 <div class="row">
@@ -75,10 +75,10 @@
                     <label>Death Rate (%)</label>
                   </div>
                   <div class="col">
-                    <input type="range" class="custom-range" value="1" onchange="death_rate.value=value"></input>
+                    <input type="range" class="custom-range" value="5" onchange="death_rate.value=value"></input>
                   </div>
                   <div class="col">
-                    <output id="death_rate">1</output>
+                    <output id="death_rate">5</output>
                   </div>
                 </div>
                 <div class="row">
@@ -121,7 +121,6 @@
         <div class="col-lg sim-column">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Card title</h5>
               <canvas id="line_chart" width="500px" height="300px"></canvas>
             </div>
           </div>
@@ -129,8 +128,7 @@
         <div class="col-lg sim-column">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <canvas id="doughnut_chart" width="500px" height="300px"></canvas>
+               <canvas id="doughnut_chart" width="500px" height="300px"></canvas>
             </div>
           </div>
         </div>
