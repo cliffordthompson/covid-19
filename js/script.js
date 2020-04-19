@@ -21,7 +21,7 @@ const FRAMES_PER_DAY = FRAMES_PER_SECOND;
 const CHART_START_DAYS = 100;
 let canvas, context;
 let balls = [];
-let statsChart;
+let lineChart;
 let currentDay = 0
 let currentDayFrame = 0;
 let recoveryInDays = 0;
@@ -92,7 +92,7 @@ function resetSimulation() {
   };
 
   var dataGraphContext = document.getElementById("data_graph");
-  statsChart = new Chart(dataGraphContext, {
+  lineChart = new Chart(dataGraphContext, {
     type: 'line',
     data: chartData,
     options: {
@@ -329,14 +329,14 @@ function updateChart(currentDay, balls) {
   // After a certain amount of time start adding values
   // to the x-axis
   if(currentDay > CHART_START_DAYS) {
-    statsChart.data.labels.push(currentDay);
+    lineChart.data.labels.push(currentDay);
   }
 
-  statsChart.data.datasets[0].data.push(totalInfected);
-  statsChart.data.datasets[1].data.push(totalImmune);
-  statsChart.data.datasets[2].data.push(totalDead);
-  statsChart.data.datasets[3].data.push(totalUnaffected);
-  statsChart.update();
+  lineChart.data.datasets[0].data.push(totalInfected);
+  lineChart.data.datasets[1].data.push(totalImmune);
+  lineChart.data.datasets[2].data.push(totalDead);
+  lineChart.data.datasets[3].data.push(totalUnaffected);
+  lineChart.update();
 }
 
 function numberOfInfected(balls) {
