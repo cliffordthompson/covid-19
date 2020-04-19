@@ -25,6 +25,7 @@ let statsChart;
 let currentDay = 0
 let currentDayFrame = 0;
 let recoveryInDays = 0;
+let intervalId = null;
 
 function startSimulationLoop() {
 
@@ -33,9 +34,14 @@ function startSimulationLoop() {
   context = canvas.getContext("2d");
 
   resetSimulation();
+}
 
-  // set up simulation loop
-  setInterval(updateSimulation, 1000 / FRAMES_PER_SECOND);
+function stopSimulation() {
+  clearIntervalLoop(intervalId);
+}
+
+function resumeSimulation() {
+  intervalId = createIntervalLoop();
 }
 
 function resetSimulation() {
@@ -100,6 +106,10 @@ function resetSimulation() {
 
   // Push all the starting data into the chart
   updateChart(currentDay, balls);
+
+  // set up simulation loop
+  clearIntervalLoop(intervalId);
+  intervalId = createIntervalLoop();
 }
 
 function updateSimulation() {
@@ -113,6 +123,25 @@ function updateSimulation() {
   for(var i = 0; i < balls.length; ++i) {
     drawBall(balls[i]);
   };
+
+  if(0 === numberOfInfected(balls)) {
+    stopSimulation();
+  }
+}
+
+function clearIntervalLoop(intervalId) {
+  if(null !== intervalId) {
+    clearInterval(intervalId);
+    intervalId = null;
+  }
+  document.getElementById("stop_button").disabled = true;
+  document.getElementById("resume_button").disabled = false;
+}
+
+function createIntervalLoop() {
+  document.getElementById("stop_button").disabled = false;
+  document.getElementById("resume_button").disabled = true;
+  return setInterval(updateSimulation, 1000 / FRAMES_PER_SECOND);
 }
 
 function drawBackground() {
@@ -156,7 +185,6 @@ function createBall() {
 
   if(0 !== deathRate) {
     let d20 = Math.floor(Math.random() * (100/deathRate));
-    console.log("D20: " + d20);
     willDie = (0 === d20);
   }
 
@@ -304,4 +332,14 @@ function updateChart(currentDay, balls) {
   statsChart.data.datasets[2].data.push(totalDead);
   statsChart.data.datasets[3].data.push(totalUnaffected);
   statsChart.update();
+}
+
+function numberOfInfected(balls) {
+  let totalInfected = 0;
+  for(var i = 0; i < balls.length; ++i) {
+    if(balls[i].infected){
+      totalInfected++;
+    }
+  }
+  return totalInfected;
 }

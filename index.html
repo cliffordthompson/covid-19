@@ -102,8 +102,12 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <button type="button" class="btn btn-primary" onclick="resetSimulation()">Reset Simulation</button>
+                  <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-primary" onclick="resetSimulation()">Reset</button>
+                    <button id="stop_button" type="button" class="btn btn-primary" disabled="true" onclick="stopSimulation()">Stop</button>
+                    <button id="resume_button" type="button" class="btn btn-primary" disabled="true" onclick="resumeSimulation()">Resume</button>
                   </div>
+                </div>
               </div>
             </div>
           </div>
