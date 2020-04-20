@@ -31,9 +31,11 @@ div {
   //border: 1px solid red; // For debugging
 }
 
-canvas {
+.sim-canvas {
   border: 1px solid black;
   margin: 0 auto;
+  width: 100%;
+  height: auto;
 }
 
 .sim-column {
