@@ -35,9 +35,6 @@ function startSimulationLoop() {
   // load canvas
   canvas = document.getElementById("simulation-canvas");
   context = canvas.getContext("2d");
-
-  $("#finished_modal").on("shown.bs.modal", onFinishedModalShow);
-
   resetSimulation();
 }
 
@@ -48,7 +45,7 @@ function stopSimulation() {
 function finishSimulation() {
   clearIntervalLoop(intervalId);
   document.getElementById("resume_button").disabled = true;
-  $("#finished_modal").modal("show");
+  showFinishedModal();
 }
 
 function resumeSimulation() {
@@ -400,7 +397,7 @@ function numberOfInfected(balls) {
   return totalInfected;
 }
 
-function onFinishedModalShow (event) {
+function showFinishedModal() {
   let totalImmune = 0;
   let totalDead = 0;
   let totalUnaffected = 0;
@@ -421,4 +418,6 @@ function onFinishedModalShow (event) {
   document.getElementById("finished_modal_total_infections").innerHTML = totalImmune + totalDead;
   document.getElementById("finished_modal_total_dead").innerHTML = totalDead;
   document.getElementById("finished_modal_total_unaffected").innerHTML = totalUnaffected;
+  $("#finished_modal").modal("show");
 }
+
