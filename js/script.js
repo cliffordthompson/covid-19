@@ -156,6 +156,8 @@ function updateSimulation() {
     drawBall(balls[i]);
   };
 
+  document.getElementById("current_day_badge").innerHTML = "Day " + currentDay;
+
   if(0 === numberOfInfected(balls)) {
     finishSimulation();
   }
@@ -409,6 +411,7 @@ function onFinishedModalShow (event) {
     }
   }
 
+  document.getElementById("finished_modal_total_days").innerHTML = currentDay + 1;
   document.getElementById("finished_modal_total_infections").innerHTML = totalImmune + totalDead;
   document.getElementById("finished_modal_total_dead").innerHTML = totalDead;
   document.getElementById("finished_modal_total_unaffected").innerHTML = totalUnaffected;

@@ -40,6 +40,9 @@
             <div class="card-body">
               <h5 class="card-title">Simulation</h5>
               <canvas class="sim-canvas" id="simulation-canvas" width="500px" height="300px"></canvas>
+              <div class="container">
+                <h5><span id="current_day_badge" class="badge badge-primary"></span></h5>
+              </div>
               <div class="btn-group" role="group">
                 <button type="button" class="btn btn-primary" onclick="resetSimulation()">Reset</button>
                 <button id="stop_button" type="button" class="btn btn-primary" disabled="true" onclick="stopSimulation()">Stop</button>
@@ -139,17 +142,22 @@
           <div class="modal-body">
             <div class="container">
               <div class="row">
-                <h5>Total Infections
+                <h5>Total Days:
+                  <span id="finished_modal_total_days" class="badge badge-primary"></span>
+                </h5>
+              </div>
+              <div class="row">
+                <h5>Total Infections:
                   <span id="finished_modal_total_infections" class="badge badge-secondary"></span>
                 </h5>
               </div>
               <div class="row">
-                <h5>Total Dead
+                <h5>Total Dead:
                   <span id="finished_modal_total_dead" class="badge badge-danger"></span>
                 </h5>
               </div>
               <div class="row">
-                <h5>Total Unaffected
+                <h5>Total Unaffected:
                   <span id="finished_modal_total_unaffected" class="badge badge-success"></span>
                 </h5>
               </div>
