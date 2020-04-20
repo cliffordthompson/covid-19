@@ -18,7 +18,7 @@
 
 const FRAMES_PER_SECOND = 30;
 const FRAMES_PER_DAY = FRAMES_PER_SECOND;
-const CHART_START_DAYS = 100;
+const CHART_START_DAYS = 60;
 let canvas, context;
 let balls = [];
 let lineChart = null;
