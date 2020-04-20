@@ -27,12 +27,16 @@ let currentDay = 0
 let currentDayFrame = 0;
 let recoveryInDays = 0;
 let intervalId = null;
+let totalInfections = 0;
+let totalDead = 0;
 
 function startSimulationLoop() {
 
   // load canvas
   canvas = document.getElementById("simulation-canvas");
   context = canvas.getContext("2d");
+
+  $("#finished_modal").on("shown.bs.modal", onFinishedModalShow);
 
   resetSimulation();
 }
@@ -44,6 +48,7 @@ function stopSimulation() {
 function finishSimulation() {
   clearIntervalLoop(intervalId);
   document.getElementById("resume_button").disabled = true;
+  $("#finished_modal").modal("show");
 }
 
 function resumeSimulation() {
@@ -385,4 +390,26 @@ function numberOfInfected(balls) {
     }
   }
   return totalInfected;
+}
+
+function onFinishedModalShow (event) {
+  let totalImmune = 0;
+  let totalDead = 0;
+  let totalUnaffected = 0;
+
+  for(var i = 0; i < balls.length; ++i) {
+    if(balls[i].immune){
+      totalImmune++;
+    }
+    else if(balls[i].dead){
+      totalDead++;
+    }
+    else {
+      totalUnaffected++;
+    }
+  }
+
+  document.getElementById("finished_modal_total_infections").innerHTML = totalImmune;
+  document.getElementById("finished_modal_total_dead").innerHTML = totalDead;
+  document.getElementById("finished_modal_total_unaffected").innerHTML = totalUnaffected;
 }
