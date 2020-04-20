@@ -409,7 +409,7 @@ function onFinishedModalShow (event) {
     }
   }
 
-  document.getElementById("finished_modal_total_infections").innerHTML = totalImmune;
+  document.getElementById("finished_modal_total_infections").innerHTML = totalImmune + totalDead;
   document.getElementById("finished_modal_total_dead").innerHTML = totalDead;
   document.getElementById("finished_modal_total_unaffected").innerHTML = totalUnaffected;
 }
