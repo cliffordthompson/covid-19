@@ -16,18 +16,24 @@
 //
 // ***************************************************************************
 
-function Ball (positionX, positionY, velocityX, velocityY, infected, daysLeftInfected, willDie, deathDay, immune) {
+function Ball (
+  positionX, positionY,
+  velocityX, velocityY,
+  unsafeDistance,
+  infected, daysLeftInfected,
+  willDie, deathDay) {
 
   this.positionX = positionX;
   this.positionY = positionY;
   this.velocityX = velocityX;
   this.velocityY = velocityY;
+  this.safeDistance = unsafeDistance;
   this.sizePx = 6;
   this.infected = infected;
   this.daysLeftInfected = daysLeftInfected;
   this.willDie = willDie;
   this.deathDay = deathDay;
-  this.immune = immune;
+  this.immune = false;
   this.dead = false;
 
   this.moveByVelocity = function() {

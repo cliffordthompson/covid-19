@@ -216,6 +216,7 @@ function createBall() {
   let willDie = false;
   let deathDay = Math.floor(Math.random() * recoveryInDays);
   let deathRate = document.getElementById("death_rate").value;
+  let unsafeDistance = document.getElementById("unsafe_distance").value;
 
   if(0 !== deathRate) {
     let d20 = Math.floor(Math.random() * (100/deathRate));
@@ -245,7 +246,12 @@ function createBall() {
     daysLeftInfected = recoveryInDays;
   }
 
-  return new Ball(positionX, positionY, velocityX, velocityY, infected, daysLeftInfected, willDie, deathDay, immune);
+  return new Ball(
+    positionX, positionY,
+    velocityX, velocityY,
+    unsafeDistance,
+    infected, daysLeftInfected,
+    willDie, deathDay);
 }
 
 function updateTime(balls) {
@@ -323,7 +329,7 @@ function updateInfections(balls) {
         if(i !== j && !balls[j].immune && !balls[j].infected && !balls[j].dead) {
           deltaX = balls[i].positionX - balls[j].positionX;
           deltaY = balls[i].positionY - balls[j].positionY;
-          distanceBetweenBalls = Math.sqrt(deltaX*deltaX + deltaY*deltaY) - balls[i].sizePx - balls[j].sizePx;
+          distanceBetweenBalls = Math.sqrt(deltaX*deltaX + deltaY*deltaY) - balls[i].safeDistance - balls[j].safeDistance;
           if(distanceBetweenBalls <= 0) {
             balls[j].makeInfected(recoveryInDays);
           }
