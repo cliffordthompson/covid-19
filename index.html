@@ -133,37 +133,62 @@
         </div>
       </div>
     </div>
-    <div class="modal fade" id="finished_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="finished_modal" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">COVID-19 Simulation Complete!</h5>
-          </div>
           <div class="modal-body">
             <div class="container">
               <div class="row">
-                <h5>Total Days:
-                  <span id="finished_modal_total_days" class="badge badge-primary"></span>
-                </h5>
+                <div class="col sim-finished-column">
+                  <h5>Total Days</h5>
+                </div>
               </div>
               <div class="row">
-                <h5>Total Infections:
-                  <span id="finished_modal_total_infections" class="badge badge-secondary"></span>
-                </h5>
+                <div class="col sim-finished-column">
+                  <h5>
+                    <span id="finished_modal_total_days" class="badge badge-primary"></span>
+                  </h5>
+                </div>
               </div>
               <div class="row">
-                <h5>Total Dead:
-                  <span id="finished_modal_total_dead" class="badge badge-danger"></span>
-                </h5>
+                <div class="col sim-finished-column">
+                  <h5>Total Infections</h5>
+                </div>
               </div>
               <div class="row">
-                <h5>Total Unaffected:
-                  <span id="finished_modal_total_unaffected" class="badge badge-success"></span>
-                </h5>
+                <div class="col sim-finished-column">
+                  <h5>
+                    <span id="finished_modal_total_infections" class="badge badge-secondary"></span>
+                  </h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col sim-finished-column">
+                  <h5>Total Dead</h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col sim-finished-column">
+                  <h5>
+                    <span id="finished_modal_total_dead" class="badge badge-danger"></span>
+                  </h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col sim-finished-column">
+                  <h5>Total Unaffected</h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col sim-finished-column">
+                  <h5>
+                    <span id="finished_modal_total_unaffected" class="badge badge-success"></span>
+                  </h5>
+                </div>
               </div>
             </div>
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer modal-center align-content-center">
             <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
           </div>
         </div>

@@ -43,6 +43,10 @@ div {
   text-align: center;
 }
 
+.sim-finished-column {
+  text-align: center;
+}
+
 .sim-jumbotron {
   background: #709255;
   color: #eeeeee;
