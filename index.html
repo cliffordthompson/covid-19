@@ -40,11 +40,16 @@
             <div class="card-body">
               <h5 class="card-title">Simulation</h5>
               <canvas class="sim-canvas" id="simulation-canvas" width="500px" height="300px"></canvas>
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-primary" onclick="resetSimulation()">Reset</button>
+                <button id="stop_button" type="button" class="btn btn-primary" disabled="true" onclick="stopSimulation()">Stop</button>
+                <button id="resume_button" type="button" class="btn btn-primary" disabled="true" onclick="resumeSimulation()">Resume</button>
+              </div>
             </div>
           </div>
         </div>
         <div class="col-lg sim-column">
-          <div class="card h-100">
+          <div class="card">
             <div class="card-body">
               <h5 class="card-title">Options</h5>
               <div class="container">
@@ -103,15 +108,6 @@
                     <output id="hospital_capacity">100</output>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col">
-                    <div class="btn-group" role="group">
-                      <button type="button" class="btn btn-primary" onclick="resetSimulation()">Reset</button>
-                      <button id="stop_button" type="button" class="btn btn-primary" disabled="true" onclick="stopSimulation()">Stop</button>
-                      <button id="resume_button" type="button" class="btn btn-primary" disabled="true" onclick="resumeSimulation()">Resume</button>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -119,14 +115,14 @@
       </div>
       <div class="row">
         <div class="col-lg sim-column">
-          <div class="card">
+          <div class="card h-100">
             <div class="card-body">
               <canvas class="sim-canvas" id="line_chart" width="500px" height="300px"></canvas>
             </div>
           </div>
         </div>
         <div class="col-lg sim-column">
-          <div class="card">
+          <div class="card h-100">
             <div class="card-body">
                <canvas class="sim-canvas" id="doughnut_chart" width="500px" height="300px"></canvas>
             </div>
