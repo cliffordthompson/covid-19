@@ -39,17 +39,17 @@ function startSimulationLoop() {
 }
 
 function stopSimulation() {
-  clearIntervalLoop(intervalId);
+  _clearIntervalLoop(intervalId);
 }
 
 function finishSimulation() {
-  clearIntervalLoop(intervalId);
+  _clearIntervalLoop(intervalId);
   document.getElementById("resume_button").disabled = true;
-  showFinishedModal();
+  _showFinishedModal();
 }
 
 function resumeSimulation() {
-  intervalId = createIntervalLoop();
+  intervalId = _createIntervalLoop();
 }
 
 function resetOptions() {
@@ -71,10 +71,10 @@ function resetSimulation() {
   currentDayFrame = 0;
   recoveryInDays = document.getElementById("recovery_rate").value;
   for(var i = 0; i < numberOfBalls; ++i) {
-    balls.push(createBall());
+    balls.push(_createBall());
   }
 
-  destroyCharts();
+  _destroyCharts();
 
   let lineChartData = {
     labels: Array.from(Array(CHART_START_DAYS+1).keys()),
@@ -143,33 +143,33 @@ function resetSimulation() {
     },});
 
   // Push all the starting data into the chart
-  updateCharts(currentDay, balls);
+  _updateCharts(currentDay, balls);
 
   // set up simulation loop
-  clearIntervalLoop(intervalId);
-  intervalId = createIntervalLoop();
+  _clearIntervalLoop(intervalId);
+  intervalId = _createIntervalLoop();
 }
 
-function updateSimulation() {
+function _updateSimulation() {
 
-  updateTime(balls);
-  updatePositions(balls);
-  updateInfections(balls);
+  _updateTime(balls);
+  _updatePositions(balls);
+  _updateInfections(balls);
 
-  drawBackground();
+  _drawBackground();
 
   for(var i = 0; i < balls.length; ++i) {
-    drawBall(balls[i]);
+    _drawBall(balls[i]);
   };
 
   document.getElementById("current_day_badge").innerHTML = "Day " + currentDay;
 
-  if(0 === numberOfInfected(balls)) {
+  if(0 === _numberOfInfected(balls)) {
     finishSimulation();
   }
 }
 
-function clearIntervalLoop(intervalId) {
+function _clearIntervalLoop(intervalId) {
   if(null !== intervalId) {
     clearInterval(intervalId);
     intervalId = null;
@@ -178,19 +178,19 @@ function clearIntervalLoop(intervalId) {
   document.getElementById("resume_button").disabled = false;
 }
 
-function createIntervalLoop() {
+function _createIntervalLoop() {
   document.getElementById("stop_button").disabled = false;
   document.getElementById("resume_button").disabled = true;
-  return setInterval(updateSimulation, 1000 / FRAMES_PER_SECOND);
+  return setInterval(_updateSimulation, 1000 / FRAMES_PER_SECOND);
 }
 
-function drawBackground() {
+function _drawBackground() {
   // draw background
   context.fillStyle = "#aabbaa";
   context.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-function drawBall(ball) {
+function _drawBall(ball) {
   // draw ball
   context.beginPath();
   context.arc(ball.positionX, ball.positionY, ball.sizePx, 0, 2 * Math.PI, false);
@@ -212,7 +212,7 @@ function drawBall(ball) {
   context.stroke();
 }
 
-function createBall() {
+function _createBall() {
 
   let positionX, positionY;
   let velocityX, velocityY;
@@ -260,25 +260,25 @@ function createBall() {
     willDie, deathDay);
 }
 
-function updateTime(balls) {
+function _updateTime(balls) {
   currentDayFrame++;
   if(currentDayFrame >= FRAMES_PER_DAY) {
     currentDay++;
     currentDayFrame = 0;
-    updateDaysInfected(balls);
-    updateDeaths(balls);
-    updateImmunity(balls);
-    updateCharts(currentDay, balls);
+    _updateDaysInfected(balls);
+    _updateDeaths(balls);
+    _updateImmunity(balls);
+    _updateCharts(currentDay, balls);
   }
 }
 
-function updatePositions(){
+function _updatePositions(){
   for(var i = 0; i < balls.length; ++i) {
-    updateBallPosition(balls[i]);
+    _updateBallPosition(balls[i]);
   }
 }
 
-function updateBallPosition(ball) {
+function _updateBallPosition(ball) {
 
   // move the ball
   ball.moveByVelocity();
@@ -298,7 +298,7 @@ function updateBallPosition(ball) {
   }
 }
 
-function updateDaysInfected(balls) {
+function _updateDaysInfected(balls) {
   for(var i = 0; i < balls.length; ++i) {
     if(balls[i].infected) {
       balls[i].reduceDaysInfected(1);
@@ -306,7 +306,7 @@ function updateDaysInfected(balls) {
   }
 }
 
-function updateDeaths(balls) {
+function _updateDeaths(balls) {
   for(var i = 0; i < balls.length; ++i) {
     if(balls[i].infected && balls[i].willDie) {
       if(balls[i].shouldDie()) {
@@ -316,7 +316,7 @@ function updateDeaths(balls) {
   }
 }
 
-function updateImmunity(balls) {
+function _updateImmunity(balls) {
   for(var i = 0; i < balls.length; ++i) {
     if(balls[i].infected && balls[i].daysLeftInfected === 0) {
       balls[i].makeImmune();
@@ -324,7 +324,7 @@ function updateImmunity(balls) {
   }
 }
 
-function updateInfections(balls) {
+function _updateInfections(balls) {
   let distanceBetweenBalls = 0;
   let deltaX = 0;
   let deltaY = 0;
@@ -345,7 +345,7 @@ function updateInfections(balls) {
   }
 }
 
-function updateCharts(currentDay, balls) {
+function _updateCharts(currentDay, balls) {
 
   let totalInfected = 0;
   let totalImmune = 0;
@@ -383,7 +383,7 @@ function updateCharts(currentDay, balls) {
   doughnutChart.update();
 }
 
-function destroyCharts() {
+function _destroyCharts() {
 
   if(null !== lineChart) {
     lineChart.destroy();
@@ -396,7 +396,7 @@ function destroyCharts() {
   }
 }
 
-function numberOfInfected(balls) {
+function _numberOfInfected(balls) {
   let totalInfected = 0;
   for(var i = 0; i < balls.length; ++i) {
     if(balls[i].infected){
@@ -406,7 +406,7 @@ function numberOfInfected(balls) {
   return totalInfected;
 }
 
-function showFinishedModal() {
+function _showFinishedModal() {
   let totalImmune = 0;
   let totalDead = 0;
   let totalUnaffected = 0;
