@@ -61,7 +61,7 @@
                     <label>People</label>
                   </div>
                   <div class="col">
-                    <input type="range" class="custom-range" min="1" max="200" value="100" oninput="number_people.value=value"></input>
+                    <input id="number_people_range" type="range" class="custom-range" min="1" max="200" value="100" oninput="number_people.value=value"></input>
                   </div>
                   <div class="col">
                     <output id="number_people">100</output>
@@ -72,7 +72,7 @@
                     <label>Unsafe Distance</label>
                   </div>
                   <div class="col">
-                    <input type="range" class="custom-range" min="1" max="20" value="6" oninput="unsafe_distance.value=value"></input>
+                    <input id="unsafe_distance_range" type="range" class="custom-range" min="1" max="20" value="6" oninput="unsafe_distance.value=value"></input>
                   </div>
                   <div class="col">
                     <output id="unsafe_distance">6</output> ft
@@ -83,7 +83,7 @@
                     <label>Recovery</label>
                   </div>
                   <div class="col">
-                    <input type="range" class="custom-range" min="1" max="28" value="14" oninput="recovery_rate.value=value"></input>
+                    <input id="recovery_rate_range" type="range" class="custom-range" min="1" max="28" value="14" oninput="recovery_rate.value=value"></input>
                   </div>
                   <div class="col">
                     <output id="recovery_rate">14</output> day(s)
@@ -94,7 +94,7 @@
                     <label>Death Rate</label>
                   </div>
                   <div class="col">
-                    <input type="range" class="custom-range" value="5" oninput="death_rate.value=value"></input>
+                    <input id="death_rate_range" type="range" class="custom-range" value="5" oninput="death_rate.value=value"></input>
                   </div>
                   <div class="col">
                     <output id="death_rate">5</output>&nbsp%
@@ -105,7 +105,7 @@
                     <label>Movement Rate</label>
                   </div>
                   <div class="col">
-                    <input type="range" class="custom-range" value="30" oninput="movement_rate.value=value"></input>
+                    <input id="movement_rate_range" type="range" class="custom-range" value="30" oninput="movement_rate.value=value"></input>
                   </div>
                   <div class="col">
                     <output id="movement_rate">30</output>
@@ -116,10 +116,15 @@
                     <label>Hospital Capacity</label>
                   </div>
                   <div class="col">
-                    <input disabled="true" type="range" class="custom-range" value="100" oninput="hospital_capacity.value=value"></input>
+                    <input id="hospital_capacity_range" disabled="true" type="range" class="custom-range" value="100" oninput="hospital_capacity.value=value"></input>
                   </div>
                   <div class="col">
                     <output id="hospital_capacity">100</output>&nbsp%
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <button type="button" class="btn btn-primary" onclick="resetOptions()">Reset</button>
                   </div>
                 </div>
               </div>

@@ -52,6 +52,15 @@ function resumeSimulation() {
   intervalId = createIntervalLoop();
 }
 
+function resetOptions() {
+  _resetRangeOption("number_people");
+  _resetRangeOption("unsafe_distance");
+  _resetRangeOption("recovery_rate");
+  _resetRangeOption("death_rate");
+  _resetRangeOption("movement_rate");
+  _resetRangeOption("hospital_capacity");
+}
+
 function resetSimulation() {
 
   let numberOfBalls = document.getElementById("number_people").value;
@@ -421,3 +430,11 @@ function showFinishedModal() {
   $("#finished_modal").modal("show");
 }
 
+function _resetRangeOption(rangeOutputId) {
+
+  let rangeInputElement = document.getElementById(rangeOutputId + "_range");
+  let rangeOutputElement = document.getElementById(rangeOutputId);
+  let rangeDefault = rangeInputElement.getAttribute("value");
+  rangeInputElement.value = rangeDefault;
+  rangeOutputElement.value = rangeDefault;
+}
