@@ -30,6 +30,20 @@ let intervalId = null;
 let totalInfections = 0;
 let totalDead = 0;
 
+// ***************************************************************************
+// Description:
+//   This is the main entry point for setting up and starting the simulation
+//   on an HTML page. This should only be called once when the page is first
+//   being displayed.
+//
+// Inputs:
+//   None
+// Outputs:
+//   None
+// Returns:
+//   None
+// ***************************************************************************
+//
 function startSimulationLoop() {
 
   // load canvas
@@ -38,20 +52,52 @@ function startSimulationLoop() {
   resetSimulation();
 }
 
+// ***************************************************************************
+// Description:
+//   This function temporarily stops the simulation. It can be resumed by
+//   calling resumeSimulation.
+//
+// Inputs:
+//   None
+// Outputs:
+//   None
+// Returns:
+//   None
+// ***************************************************************************
+//
 function stopSimulation() {
   _clearIntervalLoop(intervalId);
 }
 
-function finishSimulation() {
-  _clearIntervalLoop(intervalId);
-  document.getElementById("resume_button").disabled = true;
-  _showFinishedModal();
-}
-
+// ***************************************************************************
+// Description:
+//   This function resumes a simulation that has been previously
+//   stopped.
+//
+// Inputs:
+//   None
+// Outputs:
+//   None
+// Returns:
+//   None
+// ***************************************************************************
+//
 function resumeSimulation() {
   intervalId = _createIntervalLoop();
 }
 
+// ***************************************************************************
+// Description:
+//   This function resets all the UI options back to their default values.
+//
+// Inputs:
+//   None
+// Outputs:
+//   None
+// Returns:
+//   None
+// ***************************************************************************
+//
 function resetOptions() {
   _resetRangeOption("number_people");
   _resetRangeOption("unsafe_distance");
@@ -61,6 +107,19 @@ function resetOptions() {
   _resetRangeOption("hospital_capacity");
 }
 
+// ***************************************************************************
+// Description:
+//   This function resets the current simulation. The current option values are
+//   used to seed the new simulation run.
+//
+// Inputs:
+//   None
+// Outputs:
+//   None
+// Returns:
+//   None
+// ***************************************************************************
+//
 function resetSimulation() {
 
   let numberOfBalls = document.getElementById("number_people").value;
@@ -150,6 +209,19 @@ function resetSimulation() {
   intervalId = _createIntervalLoop();
 }
 
+// ***************************************************************************
+// Description:
+//   This function updates the simulation during each iteration of the event
+//   loop.
+//
+// Inputs:
+//   None
+// Outputs:
+//   None
+// Returns:
+//   None
+// ***************************************************************************
+//
 function _updateSimulation() {
 
   _updateTime(balls);
@@ -165,10 +237,42 @@ function _updateSimulation() {
   document.getElementById("current_day_badge").innerHTML = "Day " + currentDay;
 
   if(0 === _numberOfInfected(balls)) {
-    finishSimulation();
+    _finishSimulation();
   }
 }
 
+// ***************************************************************************
+// Description:
+//   This function can be called to end the simulation. The event is stopped
+//   and a modal window displays statistics for the simulation.
+//
+// Inputs:
+//   None
+// Outputs:
+//   None
+// Returns:
+//   None
+// ***************************************************************************
+//
+function finishSimulation() {
+  _clearIntervalLoop(intervalId);
+  document.getElementById("resume_button").disabled = true;
+  _showFinishedModal();
+}
+
+// ***************************************************************************
+// Description:
+//   This function cancels the interval callback . It also updates the UI
+//   buttons to reflect that simulation cannot be stopped, only resumed or reset.
+//
+// Inputs:
+//   intervalId - The ID of the interval callback to clear.
+// Outputs:
+//   None
+// Returns:
+//   None
+// ***************************************************************************
+//
 function _clearIntervalLoop(intervalId) {
   if(null !== intervalId) {
     clearInterval(intervalId);
@@ -178,18 +282,55 @@ function _clearIntervalLoop(intervalId) {
   document.getElementById("resume_button").disabled = false;
 }
 
+// ***************************************************************************
+// Description:
+//   This function registers a new interval callback.
+//
+// Inputs:
+//   None
+// Outputs:
+//   None
+// Returns:
+//   The ID of the new event loop callback. This can be used to cancel
+//   the event loop.
+// ***************************************************************************
+//
 function _createIntervalLoop() {
   document.getElementById("stop_button").disabled = false;
   document.getElementById("resume_button").disabled = true;
   return setInterval(_updateSimulation, 1000 / FRAMES_PER_SECOND);
 }
 
+// ***************************************************************************
+// Description:
+//   This function draws the background for the simulation canvas.
+//
+// Inputs:
+//   None
+// Outputs:
+//   None
+// Returns:
+//   None
+// ***************************************************************************
+//
 function _drawBackground() {
   // draw background
   context.fillStyle = "#aabbaa";
   context.fillRect(0, 0, canvas.width, canvas.height);
 }
 
+// ***************************************************************************
+// Description:
+//   This function draws a single call on the simulation canvas.
+//
+// Inputs:
+//   ball - The instance of the ball to draw
+// Outputs:
+//   None
+// Returns:
+//   None
+// ***************************************************************************
+//
 function _drawBall(ball) {
   // draw ball
   context.beginPath();
@@ -212,6 +353,19 @@ function _drawBall(ball) {
   context.stroke();
 }
 
+// ***************************************************************************
+// Description:
+//   This function creates an instance of a ball. The options from the
+//   UI are used to define many of the attributes of the ball instance.
+//
+// Inputs:
+//   None
+// Outputs:
+//   None
+// Returns:
+//   An instance of a ball
+// ***************************************************************************
+//
 function _createBall() {
 
   let positionX, positionY;
@@ -260,6 +414,19 @@ function _createBall() {
     willDie, deathDay);
 }
 
+// ***************************************************************************
+// Description:
+//   This function updates the attributes of the balls that are dependent on
+//   the day changing.
+//
+// Inputs:
+//   balls - The array of all balls in the simulation.
+// Outputs:
+//   None
+// Returns:
+//   None
+// ***************************************************************************
+//
 function _updateTime(balls) {
   currentDayFrame++;
   if(currentDayFrame >= FRAMES_PER_DAY) {
@@ -272,12 +439,37 @@ function _updateTime(balls) {
   }
 }
 
+// ***************************************************************************
+// Description:
+//   This function updates the positions of all the balls. This is typically
+//   called on every event loop iteration.
+//
+// Inputs:
+//   balls - The array of all balls in the simulation.
+// Outputs:
+//   None
+// Returns:
+//   None
+// ***************************************************************************
+//
 function _updatePositions(){
   for(var i = 0; i < balls.length; ++i) {
     _updateBallPosition(balls[i]);
   }
 }
 
+// ***************************************************************************
+// Description:
+//   This function updates the position of a single ball.
+//
+// Inputs:
+//   ball - The ball to update the position for.
+// Outputs:
+//   None
+// Returns:
+//   None
+// ***************************************************************************
+//
 function _updateBallPosition(ball) {
 
   // move the ball
@@ -298,6 +490,19 @@ function _updateBallPosition(ball) {
   }
 }
 
+// ***************************************************************************
+// Description:
+//   This function updates the "days infected" for all balls that are current
+//   infected.
+//
+// Inputs:
+//   balls - The array of all balls in the simulation.
+// Outputs:
+//   None
+// Returns:
+//   None
+// ***************************************************************************
+//
 function _updateDaysInfected(balls) {
   for(var i = 0; i < balls.length; ++i) {
     if(balls[i].infected) {
@@ -306,6 +511,18 @@ function _updateDaysInfected(balls) {
   }
 }
 
+// ***************************************************************************
+// Description:
+//   This function determines if balls should die and kills them.
+//
+// Inputs:
+//   balls - The array of all balls in the simulation.
+// Outputs:
+//   None
+// Returns:
+//   None
+// ***************************************************************************
+//
 function _updateDeaths(balls) {
   for(var i = 0; i < balls.length; ++i) {
     if(balls[i].infected && balls[i].willDie) {
@@ -316,6 +533,19 @@ function _updateDeaths(balls) {
   }
 }
 
+// ***************************************************************************
+// Description:
+//   This function determines if balls have complete the time to fight
+//   off the virus, and makes them as immune.
+//
+// Inputs:
+//   balls - The array of all balls in the simulation.
+// Outputs:
+//   None
+// Returns:
+//   None
+// ***************************************************************************
+//
 function _updateImmunity(balls) {
   for(var i = 0; i < balls.length; ++i) {
     if(balls[i].infected && balls[i].daysLeftInfected === 0) {
@@ -324,6 +554,19 @@ function _updateImmunity(balls) {
   }
 }
 
+// ***************************************************************************
+// Description:
+//   This function determines if balls should before infected based in their
+//   proximity to other balls, and the safe distance for infections.
+//
+// Inputs:
+//   balls - The array of all balls in the simulation.
+// Outputs:
+//   None
+// Returns:
+//   None
+// ***************************************************************************
+//
 function _updateInfections(balls) {
   let distanceBetweenBalls = 0;
   let deltaX = 0;
@@ -345,6 +588,20 @@ function _updateInfections(balls) {
   }
 }
 
+// ***************************************************************************
+// Description:
+//   This function updates the statistics on the line chart and doughnut
+//   chart.
+//
+// Inputs:
+//   currentDay - The current simulation "day"
+//   balls - The array of all balls in the simulation.
+// Outputs:
+//   None
+// Returns:
+//   None
+// ***************************************************************************
+//
 function _updateCharts(currentDay, balls) {
 
   let totalInfected = 0;
@@ -383,6 +640,19 @@ function _updateCharts(currentDay, balls) {
   doughnutChart.update();
 }
 
+// ***************************************************************************
+// Description:
+//   This function cleans up the line chart and doughnut charts. This is
+//   required when attempting a new simulation run.
+//
+// Inputs:
+//   None
+// Outputs:
+//   None
+// Returns:
+//   None
+// ***************************************************************************
+//
 function _destroyCharts() {
 
   if(null !== lineChart) {
@@ -396,6 +666,19 @@ function _destroyCharts() {
   }
 }
 
+// ***************************************************************************
+// Description:
+//   This function determines the number balls that are current infected
+//   and returns the value.
+//
+// Inputs:
+//   ball - The array of all balls in the simulation.
+// Outputs:
+//   None
+// Returns:
+//   The total number of balls currently infected.
+// ***************************************************************************
+//
 function _numberOfInfected(balls) {
   let totalInfected = 0;
   for(var i = 0; i < balls.length; ++i) {
@@ -406,6 +689,18 @@ function _numberOfInfected(balls) {
   return totalInfected;
 }
 
+// ***************************************************************************
+// Description:
+//   This function shows the modal window that displays simulation statistics.
+//
+// Inputs:
+//   None
+// Outputs:
+//   None
+// Returns:
+//   None
+// ***************************************************************************
+//
 function _showFinishedModal() {
   let totalImmune = 0;
   let totalDead = 0;
@@ -430,6 +725,20 @@ function _showFinishedModal() {
   $("#finished_modal").modal("show");
 }
 
+// ***************************************************************************
+// Description:
+//   This function resets a single range slider input element. It also resets
+//   the companion output element beside the range slider
+//
+// Inputs:
+//   rangeOutputId  - The ID of the companion output element. This is used for
+//                    looking up the ID of the range input element.
+// Outputs:
+//   None
+// Returns:
+//   None
+// ***************************************************************************
+//
 function _resetRangeOption(rangeOutputId) {
 
   let rangeInputElement = document.getElementById(rangeOutputId + "_range");
