@@ -254,7 +254,7 @@ function _updateSimulation() {
 //   None
 // ***************************************************************************
 //
-function finishSimulation() {
+function _finishSimulation() {
   _clearIntervalLoop(intervalId);
   document.getElementById("resume_button").disabled = true;
   _showFinishedModal();
